@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "cd frontend && npm install && cd ../server && npm install",
+    "postinstall": "cd frontend && npm install --include=dev && cd ../server && npm install",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:frontend\"",
     "dev:server": "cd server && node index.js",
     "dev:frontend": "cd frontend && npm run dev",
