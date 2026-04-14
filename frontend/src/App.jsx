@@ -8,7 +8,7 @@ import ReviewPanel from './components/ReviewPanel';
 import JobDashboard from './components/JobDashboard';
 
 const STEPS = ['Story', 'Style', 'Platforms', 'Images', 'Review'];
-const API_BASE = 'http://localhost:3001';
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://youtube-automation-backend-vert.vercel.app';
 
 function App() {
   const [currentStep, setCurrentStep] = useState(0);
