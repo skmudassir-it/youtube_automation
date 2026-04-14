@@ -1,0 +1,2368 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "amount": 100
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                1168,
+                176
+            ],
+            "id": "c86fa63a-b1ff-40bc-8edd-e7fe09353b4e",
+            "name": "100",
+            "webhookId": "253a0ba8-4d1d-472a-8913-63c3fb2e8649"
+        },
+        {
+            "parameters": {
+                "amount": 110
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                1344,
+                448
+            ],
+            "id": "9ce424bc-75a2-4fa5-a6c2-bf8bf49e2f16",
+            "name": "110",
+            "webhookId": "690edca1-00de-4b4a-ba70-52d6c5228771"
+        },
+        {
+            "parameters": {
+                "amount": 120
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                528,
+                768
+            ],
+            "id": "6cdb23c2-8ea7-481b-a883-df4643175240",
+            "name": "120",
+            "webhookId": "7ca84016-9b55-4f7b-be0d-b40367212ed2"
+        },
+        {
+            "parameters": {
+                "amount": 210
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                464,
+                448
+            ],
+            "id": "d2ad6881-cd82-4a1b-90b0-50ce9eed8df8",
+            "name": "210",
+            "webhookId": "64b867dd-1c77-4ccd-8c23-df4f3e2dbb5c"
+        },
+        {
+            "parameters": {
+                "amount": 350
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+                816,
+                768
+            ],
+            "id": "013814c6-b870-49ff-9539-84e978efa5eb",
+            "name": "350",
+            "webhookId": "ccffba79-625d-4428-bcb5-5e93038dead8"
+        },
+        {
+            "parameters": {
+                "jsCode": "const min = 1; // minimum value\nconst max = 3; // maximum value\nconst randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;\nreturn [{ json: { randomNumber } }];"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                160,
+                176
+            ],
+            "id": "e5829762-9e89-43e5-82ec-999aa6270192",
+            "name": "Random"
+        },
+        {
+            "parameters": {},
+            "type": "@n8n/n8n-nodes-langchain.toolThink",
+            "typeVersion": 1.1,
+            "position": [
+                720,
+                608
+            ],
+            "id": "b931e50d-d814-4abc-9691-bd47e62b7763",
+            "name": "Think"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://backend.blotato.com/v2/media",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "blotato-api-key",
+                            "value": "blt_4Bbg3sFDb7+S7n+EBSYtbwdMPnU+f0I1hU+vSpos3m0="
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "url",
+                            "value": "={{ $('Get Subs').item.json.video.url }}"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1184,
+                768
+            ],
+            "id": "939e88d5-c03c-4686-ad5a-06cbec919346",
+            "name": "Upload to Blotato"
+        },
+        {
+            "parameters": {
+                "options": {}
+            },
+            "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+            "typeVersion": 1,
+            "position": [
+                416,
+                624
+            ],
+            "id": "946112d4-8c6b-436a-9451-d1d104e3fe80",
+            "name": "Brain",
+            "credentials": {
+                "openRouterApi": {
+                    "id": "cRNmm44LsHLzrW6P",
+                    "name": "OpenRouter account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "content": "## Create Anime Scenes\n\nThis section creates a chosen text prompt from a randomized number that gives video direction.\n",
+                "height": 256,
+                "width": 800
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+                32,
+                80
+            ],
+            "typeVersion": 1,
+            "id": "71c75eda-3638-471f-aefe-7af63ff1bd64",
+            "name": "Sticky Note"
+        },
+        {
+            "parameters": {
+                "content": "## Create Video\nWe make use of Seedance V1 to create videos",
+                "height": 288,
+                "width": 832,
+                "color": 3
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+                32,
+                352
+            ],
+            "typeVersion": 1,
+            "id": "366ea018-63ff-4e4b-85ee-620d32578827",
+            "name": "Sticky Note2"
+        },
+        {
+            "parameters": {
+                "content": "# Anime Video Creation Process",
+                "height": 944,
+                "width": 1696,
+                "color": 7
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+                0,
+                0
+            ],
+            "id": "ffdd3855-d79f-4a22-bb80-a37ce979f1f7",
+            "name": "Sticky Note8"
+        },
+        {
+            "parameters": {
+                "content": "## Merge Videos\nMerge video clips with FFMPEG",
+                "height": 256,
+                "width": 992,
+                "color": 4
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+                32,
+                672
+            ],
+            "typeVersion": 1,
+            "id": "9c1afabf-d8e0-41ed-953e-90f3b08e3fc5",
+            "name": "Sticky Note4"
+        },
+        {
+            "parameters": {
+                "url": "=https://queue.fal.run/fal-ai/ffmpeg-api/requests/{{ $json.request_id }}",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Key 6b7c0e0d-e644-4e4a-8084-635b158886bf:0d6bd9724f4861083319ea753f37a8ea"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                624,
+                768
+            ],
+            "id": "9fcffc03-7f3b-46b9-9815-47c963fed9a3",
+            "name": "Get Merged Video"
+        },
+        {
+            "parameters": {
+                "fieldsToAggregate": {
+                    "fieldToAggregate": [
+                        {
+                            "fieldToAggregate": "video_url"
+                        },
+                        {
+                            "fieldToAggregate": "voice_url"
+                        },
+                        {
+                            "fieldToAggregate": "music_url"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.aggregate",
+            "typeVersion": 1,
+            "position": [
+                240,
+                768
+            ],
+            "id": "5bf244c1-7b1b-4d85-b3b9-f3f7acd9cd76",
+            "name": "Aggregate"
+        },
+        {
+            "parameters": {
+                "fieldToSplitOut": "output",
+                "include": "allOtherFields",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.splitOut",
+            "typeVersion": 1,
+            "position": [
+                720,
+                176
+            ],
+            "id": "f4df2419-3745-4adf-998c-01c8653d3049",
+            "name": "Split Out"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.kie.ai/api/v1/jobs/createTask",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer cedfe10c95596f1f4bc96e9004e5b3cf"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{\n{\n\"model\": \"bytedance/v1-lite-image-to-video\",\n\"callBackUrl\": \"https://your-domain.com/api/callback\",\n\"input\": {\n\"prompt\": $json.output['Final Prompt'],\n\"image_url\": $json.output['Image URL'],\n\"resolution\": \"1080p\",\n\"duration\": \"5\",\n\"camera_fixed\": false,\n\"seed\": -1,\n\"enable_safety_checker\": true\n}\n}\n}}",
+                "options": {
+                    "batching": {
+                        "batch": {
+                            "batchSize": 1,
+                            "batchInterval": 3000
+                        }
+                    }
+                }
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                368,
+                448
+            ],
+            "id": "82ecc107-5c11-4258-9f53-ed86f2338365",
+            "name": "Generate Video",
+            "alwaysOutputData": true
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://queue.fal.run/fal-ai/ffmpeg-api/compose",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Key 6b7c0e0d-e644-4e4a-8084-635b158886bf:0d6bd9724f4861083319ea753f37a8ea"
+                        },
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"tracks\": [\n    {{ JSON.stringify($json.ffmpeg.video, null, 2) }}\n    ,\n    {{ JSON.stringify($json.ffmpeg.audio, null, 2).slice(1, -1) }}\n    ,\n    {\n      \"id\": \"100\",\n      \"type\": \"audio\",\n      \"keyframes\": [\n        {\n          \"timestamp\": 0,\n          \"duration\": 60,\n          \"url\": \"{{ $('Aggregate').item.json.music_url[0] }}\"\n        }\n      ]\n    }\n  ]\n}\n",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                432,
+                768
+            ],
+            "id": "e162f65b-715f-4945-895e-ff9224dd067e",
+            "name": "Merge"
+        },
+        {
+            "parameters": {
+                "url": "https://api.kie.ai/api/v1/jobs/recordInfo",
+                "sendQuery": true,
+                "queryParameters": {
+                    "parameters": [
+                        {
+                            "name": "taskId",
+                            "value": "={{ $json.data.taskId }}"
+                        }
+                    ]
+                },
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer cedfe10c95596f1f4bc96e9004e5b3cf"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                560,
+                448
+            ],
+            "id": "4092fab8-d788-4e9e-93b8-58d8a7fda8db",
+            "name": "Get clip"
+        },
+        {
+            "parameters": {
+                "schemaType": "manual",
+                "inputSchema": "{\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"Anime Idea\": {\"type\": \"string\"},\n      \"YouTube Title\": {\"type\": \"string\"},\n      \"YouTube Description\": {\"type\": \"string\"},\n      \"ID\": {\"type\": \"string\"},\n      \"caption\": { \"type\": \"string\" },\n      \"Image URL\": { \"type\": \"string\" },\n      \"character\": { \"type\": \"string\" },\n      \"story\": { \"type\": \"string\" },\n      \"visual_style\": { \"type\": \"string\" },\n      \"colors\": { \"type\": \"string\" },\n      \"scenes\": { \"type\": \"string\" },\n      \"aspect_ratio\": { \"type\": \"string\" },\n      \"image_prompt\": {\n        \"type\": \"string\",\n        \"description\": \"Single sentence instruction combining character, story, visual_style, and colors.\"\n      }\n    },\n    \"required\": [\n      \"caption\",\n      \"Image URL\",\n      \"character\",\n      \"story\",\n      \"visual_style\",\n      \"colors\",\n      \"scenes\",\n      \"aspect_ratio\",\n      \"image_prompt\"\n    ],\n    \"additionalProperties\": false\n  },\n  \"minItems\": 1\n}",
+                "autoFix": true
+            },
+            "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+            "typeVersion": 1.3,
+            "position": [
+                464,
+                352
+            ],
+            "id": "76a0f044-f052-442f-9681-8f13a2d18c41",
+            "name": "Format"
+        },
+        {
+            "parameters": {
+                "content": "## Create Image\nWe make use of Nanobanana to create images",
+                "height": 256,
+                "width": 800,
+                "color": 6
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+                864,
+                80
+            ],
+            "typeVersion": 1,
+            "id": "3cfc5405-cad7-4e77-9922-2b1f167597c5",
+            "name": "Sticky Note5"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://api.kie.ai/api/v1/jobs/createTask",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer cedfe10c95596f1f4bc96e9004e5b3cf"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"model\": \"google/nano-banana-edit\",\n  \"callBackUrl\": \"https://your-domain.com/api/callback\",\n  \"input\": {\n    \"prompt\": \"{{ $json.Prompt }}\",\n    \"image_urls\": [\n      \"{{ $json[\"Image URL \"] }}\"\n    ],\n    \"output_format\": \"png\",\n    \"image_size\": \"{{ $json.aspect_ratio }}\"\n  }\n} ",
+                "options": {
+                    "batching": {
+                        "batch": {
+                            "batchSize": 1,
+                            "batchInterval": 3000
+                        }
+                    }
+                }
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1040,
+                176
+            ],
+            "id": "66a59ed1-a7a4-47fa-a890-98e35fea5dd2",
+            "name": "Generate Image",
+            "alwaysOutputData": true
+        },
+        {
+            "parameters": {
+                "url": "https://api.kie.ai/api/v1/jobs/recordInfo",
+                "sendQuery": true,
+                "queryParameters": {
+                    "parameters": [
+                        {
+                            "name": "taskId",
+                            "value": "={{ $json.data.taskId }}"
+                        }
+                    ]
+                },
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Bearer cedfe10c95596f1f4bc96e9004e5b3cf"
+                        }
+                    ]
+                },
+                "options": {
+                    "batching": {
+                        "batch": {
+                            "batchSize": 1,
+                            "batchInterval": 3000
+                        }
+                    }
+                }
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1296,
+                176
+            ],
+            "id": "963a7b37-f791-49ec-b8df-986efa450a7b",
+            "name": "Get Image",
+            "alwaysOutputData": true
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "a1d19d97-5a99-4bac-833a-67c2c448d509",
+                            "name": "Idea",
+                            "value": "={{ $json.output['Anime Idea'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "6cd2ceb4-577b-473e-b53f-eb57353f85df",
+                            "name": "ID",
+                            "value": "={{ $json.output.ID }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "070bcc30-a87a-469f-879f-cdf30d245418",
+                            "name": "Image URL ",
+                            "value": "={{ $json.output[\"Image URL\"] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "e59b34f7-3b17-4e89-9c2a-d0b3a644eb25",
+                            "name": "Prompt",
+                            "value": "={{ $json.output.image_prompt }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "57964fe9-e91e-4f6c-beb9-cb6cb2791a91",
+                            "name": "aspect_ratio",
+                            "value": "={{ $json.output.aspect_ratio }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "abf028ae-0b50-4fcf-baa3-31e0d3891a50",
+                            "name": "caption",
+                            "value": "={{ $json.output.caption }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "6f960269-cd81-4d0d-97cd-1d524fef476b",
+                            "name": "Music URL",
+                            "value": "={{ $('Get Anime Idea').item.json['Music URL'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "e4c5580f-fa20-4f53-9617-5f9bb3d89a3f",
+                            "name": "YouTube Title",
+                            "value": "={{ $json.output['YouTube Title'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "37c04959-60a2-46fb-9761-9ac2be35692b",
+                            "name": "YouTube Description",
+                            "value": "={{ $json.output['YouTube Description'] }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                896,
+                176
+            ],
+            "id": "fdd2b42c-c75c-440c-aede-74be04410f11",
+            "name": "Image Fields"
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "4756fc1f-96ef-449d-b94e-dc500a082e11",
+                            "name": "Idea",
+                            "value": "={{ $('Image Fields').item.json.Idea }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "fd62b156-7c8c-45a5-a470-beea64c2b831",
+                            "name": "ID",
+                            "value": "={{ $json.fields.ID }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "070bcc30-a87a-469f-879f-cdf30d245418",
+                            "name": "Image URL ",
+                            "value": "={{ $json.fields.image_url }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "e59b34f7-3b17-4e89-9c2a-d0b3a644eb25",
+                            "name": "Prompt",
+                            "value": "={{ $json.fields.Prompt }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "57964fe9-e91e-4f6c-beb9-cb6cb2791a91",
+                            "name": "aspect_ratio",
+                            "value": "={{ $json.fields.ar }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "00043db1-7971-4182-af9b-3627b37c183a",
+                            "name": "caption",
+                            "value": "={{ $json.fields.Caption }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "22086c8b-d08b-4c63-9955-7a411c4ecfc8",
+                            "name": "Music URL",
+                            "value": "={{ $('Image Fields').item.json['Music URL'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "2f789db4-48b8-4970-8cbb-11793d62c8c0",
+                            "name": "YouTube Title",
+                            "value": "={{ $('Image Fields').item.json['YouTube Title'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "9f850a89-0b7d-4613-bfbe-0af400233419",
+                            "name": "YouTube Description",
+                            "value": "={{ $('Image Fields').item.json['YouTube Description'] }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                48,
+                448
+            ],
+            "id": "b5c58a9a-ffb7-47c9-a903-7e54bc90dd8e",
+            "name": "Video Fields"
+        },
+        {
+            "parameters": {
+                "content": "## Schedule to post on YT via Blotato\n",
+                "height": 256,
+                "width": 614
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+                1056,
+                672
+            ],
+            "typeVersion": 1,
+            "id": "324f9eaa-5d4e-4ae5-ae7b-904fe1d3f095",
+            "name": "Sticky Note3"
+        },
+        {
+            "parameters": {
+                "mode": "runOnceForEachItem",
+                "jsCode": "// For each incoming item, get the URL from item.json.data.resultJson\n\nlet url = null;\n\n// Check for the resultJson in item.json.data\nif (\n  item &&\n  item.json &&\n  item.json.data &&\n  item.json.data.resultJson\n) {\n  // Parse resultJson if it's a string\n  const resultJson = typeof item.json.data.resultJson === 'string'\n    ? JSON.parse(item.json.data.resultJson)\n    : item.json.data.resultJson;\n\n  // Extract the first URL\n  if (\n    resultJson.resultUrls &&\n    resultJson.resultUrls.length > 0\n  ) {\n    url = resultJson.resultUrls[0];\n  }\n}\n\n// Return the URL as a new property\nreturn {\n  json: { url },\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1424,
+                176
+            ],
+            "id": "8ee2e1f5-0be6-4194-9830-c4d4489f056b",
+            "name": "Extract Image URL"
+        },
+        {
+            "parameters": {
+                "schemaType": "manual",
+                "inputSchema": "{\n\"image url\": \"string\",\n\"final prompt\": \"string\",\n\"aspect ratio\": \"string\",\n\"caption\": \"string\",\n\"music url\": \"string\"\n}"
+            },
+            "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+            "typeVersion": 1.3,
+            "position": [
+                272,
+                608
+            ],
+            "id": "349dd142-473e-45ad-ae7d-f433c4909ce1",
+            "name": "Format Video Details"
+        },
+        {
+            "parameters": {
+                "mode": "runOnceForEachItem",
+                "jsCode": "let url = null;\n\n// Access the deeply nested resultJson as a string\nif (\n  item.json &&\n  item.json.data &&\n  item.json.data.resultJson\n) {\n  // Parse resultJson string to object\n  const resultObj = JSON.parse(item.json.data.resultJson);\n\n  // Extract the first URL if available\n  if (\n    resultObj.resultUrls &&\n    resultObj.resultUrls.length > 0\n  ) {\n    url = resultObj.resultUrls[0];\n  }\n}\n\n// Output URL as sole value in the returned object for this item\nreturn {\n  json: { url }\n};"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                656,
+                448
+            ],
+            "id": "62e1a023-23ae-449c-8904-d4ceb8ec0d84",
+            "name": "Extract Video URL"
+        },
+        {
+            "parameters": {
+                "operation": "create",
+                "base": {
+                    "__rl": true,
+                    "value": "appA4jKTjQy2QbmTm",
+                    "mode": "list",
+                    "cachedResultName": "Anime Video Automation",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm"
+                },
+                "table": {
+                    "__rl": true,
+                    "value": "tbl5v3yJNAQvyrxQD",
+                    "mode": "list",
+                    "cachedResultName": "Production",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm/tbl5v3yJNAQvyrxQD"
+                },
+                "columns": {
+                    "mappingMode": "defineBelow",
+                    "value": {
+                        "ID": "={{ $('Image Fields').item.json.ID }}",
+                        "Caption": "={{ $('Image Fields').item.json.caption }}",
+                        "Prompt": "={{ $('Image Fields').item.json.Prompt }}",
+                        "ar": "={{ $('Image Fields').item.json.aspect_ratio }}",
+                        "image_url": "={{ $json.url }}"
+                    },
+                    "matchingColumns": [],
+                    "schema": [
+                        {
+                            "id": "ID",
+                            "displayName": "ID",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "Caption",
+                            "displayName": "Caption",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "Prompt",
+                            "displayName": "Prompt",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "ar",
+                            "displayName": "ar",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "image_url",
+                            "displayName": "image_url",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "video_url",
+                            "displayName": "video_url",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "voice_url",
+                            "displayName": "voice_url",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        }
+                    ],
+                    "attemptToConvertTypes": false,
+                    "convertFieldsToString": false
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.airtable",
+            "typeVersion": 2.1,
+            "position": [
+                1552,
+                176
+            ],
+            "id": "2be68519-bb90-444c-ab5a-ebccb3903fd2",
+            "name": "Add Image URL",
+            "credentials": {
+                "airtableTokenApi": {
+                    "id": "CwHNK4Hk6kySzWbk",
+                    "name": "amaira alaina shaik"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "operation": "update",
+                "base": {
+                    "__rl": true,
+                    "value": "appA4jKTjQy2QbmTm",
+                    "mode": "list",
+                    "cachedResultName": "Anime Video Automation",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm"
+                },
+                "table": {
+                    "__rl": true,
+                    "value": "tbl5v3yJNAQvyrxQD",
+                    "mode": "list",
+                    "cachedResultName": "Production",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm/tbl5v3yJNAQvyrxQD"
+                },
+                "columns": {
+                    "mappingMode": "defineBelow",
+                    "value": {
+                        "ID": "={{ $('Video Fields').item.json.ID }}",
+                        "Caption": "={{ $('Video Fields').item.json.caption }}",
+                        "Prompt": "={{ $('Video Agent').item.json.output['Final Prompt'] }}",
+                        "video_url": "={{ $json.url }}",
+                        "ar": "={{ $('Video Fields').item.json.aspect_ratio }}",
+                        "image_url": "={{ $('Video Fields').item.json['Image URL '] }}"
+                    },
+                    "matchingColumns": [
+                        "ID"
+                    ],
+                    "schema": [
+                        {
+                            "id": "id",
+                            "displayName": "id",
+                            "required": false,
+                            "defaultMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": true,
+                            "removed": false
+                        },
+                        {
+                            "id": "ID",
+                            "displayName": "ID",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "Caption",
+                            "displayName": "Caption",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "Prompt",
+                            "displayName": "Prompt",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "ar",
+                            "displayName": "ar",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "image_url",
+                            "displayName": "image_url",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "video_url",
+                            "displayName": "video_url",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "voice_url",
+                            "displayName": "voice_url",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        }
+                    ],
+                    "attemptToConvertTypes": false,
+                    "convertFieldsToString": false
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.airtable",
+            "typeVersion": 2.1,
+            "position": [
+                752,
+                448
+            ],
+            "id": "c243ad7e-1198-420e-9376-647cb43f852a",
+            "name": "Add Video URL",
+            "credentials": {
+                "airtableTokenApi": {
+                    "id": "CwHNK4Hk6kySzWbk",
+                    "name": "amaira alaina shaik"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "content": "## Create Voice over\nMerge video clips generated by Sora 2",
+                "height": 288,
+                "width": 784,
+                "color": 5
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+                880,
+                352
+            ],
+            "typeVersion": 1,
+            "id": "5d61fc74-b54d-4e54-8e77-b2ca5e3ce22f",
+            "name": "Sticky Note6"
+        },
+        {
+            "parameters": {
+                "operation": "search",
+                "base": {
+                    "__rl": true,
+                    "value": "appA4jKTjQy2QbmTm",
+                    "mode": "list",
+                    "cachedResultName": "Anime Video Automation",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm"
+                },
+                "table": {
+                    "__rl": true,
+                    "value": "tbl8pjZCwIIIzCLHc",
+                    "mode": "list",
+                    "cachedResultName": "Anime Video DashB",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm/tbl8pjZCwIIIzCLHc"
+                },
+                "filterByFormula": "=({ID} = '{{ $json.randomNumber }}')",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.airtable",
+            "typeVersion": 2.1,
+            "position": [
+                256,
+                176
+            ],
+            "id": "6df744b0-d8fa-4dbe-8985-75b4c09d250a",
+            "name": "Get Anime Idea",
+            "credentials": {
+                "airtableTokenApi": {
+                    "id": "CwHNK4Hk6kySzWbk",
+                    "name": "amaira alaina shaik"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "81129b28-b9f0-42ca-8390-b8195271d717",
+                            "name": "Idea",
+                            "value": "={{ $('Video Fields').item.json.Idea }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "6cd2ceb4-577b-473e-b53f-eb57353f85df",
+                            "name": "ID",
+                            "value": "={{ $json.fields.ID }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "e59b34f7-3b17-4e89-9c2a-d0b3a644eb25",
+                            "name": "Prompt",
+                            "value": "={{ $json.fields.Prompt }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "f6e2a2ca-0859-4d16-b308-e8b9c6ae12a3",
+                            "name": "caption",
+                            "value": "={{ $json.fields.Caption }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "9356b7c1-06a8-4875-9dc0-b8794c3f9eeb",
+                            "name": "aspect_ratio",
+                            "value": "={{ $json.fields.ar }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "cfb522a7-a31e-45d3-9640-3000df9ad874",
+                            "name": "Music URL",
+                            "value": "={{ $('Video Fields').item.json['Music URL'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "71dc3aa5-6798-4948-ae6a-63343ad1dc17",
+                            "name": "YouTube Title",
+                            "value": "={{ $('Video Fields').item.json['YouTube Title'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "b27b79de-7146-4181-9afc-4792c7512aaa",
+                            "name": "YouTube Description",
+                            "value": "={{ $('Video Fields').item.json['YouTube Description'] }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                928,
+                448
+            ],
+            "id": "6400a7ed-235e-4d0c-b19d-629a2a7e253c",
+            "name": "Voice Fields"
+        },
+        {
+            "parameters": {
+                "operation": "search",
+                "base": {
+                    "__rl": true,
+                    "value": "appA4jKTjQy2QbmTm",
+                    "mode": "list",
+                    "cachedResultName": "Anime Video Automation",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm"
+                },
+                "table": {
+                    "__rl": true,
+                    "value": "=tbl5v3yJNAQvyrxQD",
+                    "mode": "id"
+                },
+                "filterByFormula": "=({ID} = '{{ $json.fields.ID }}')",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.airtable",
+            "typeVersion": 2.1,
+            "position": [
+                48,
+                768
+            ],
+            "id": "49ac201b-4636-4780-9388-83a7f5898e32",
+            "name": "Get Batch Items",
+            "executeOnce": false,
+            "credentials": {
+                "airtableTokenApi": {
+                    "id": "CwHNK4Hk6kySzWbk",
+                    "name": "amaira alaina shaik"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://queue.fal.run/fal-ai/elevenlabs/tts/turbo-v2.5",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Key 6b7c0e0d-e644-4e4a-8084-635b158886bf:0d6bd9724f4861083319ea753f37a8ea"
+                        },
+                        {
+                            "name": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": [
+                        {
+                            "name": "text",
+                            "value": "={{ $json.output }}"
+                        },
+                        {
+                            "name": "voice",
+                            "value": "Rachel"
+                        },
+                        {
+                            "name": "stability",
+                            "value": "0.5"
+                        },
+                        {
+                            "name": "similarity_boost",
+                            "value": "0.75"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1248,
+                448
+            ],
+            "id": "ef0c4f0e-a105-4303-b469-f4166e8c4167",
+            "name": "Create Voice"
+        },
+        {
+            "parameters": {
+                "url": "=https://queue.fal.run/fal-ai/elevenlabs/requests/{{ $json.request_id }}",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Key 6b7c0e0d-e644-4e4a-8084-635b158886bf:0d6bd9724f4861083319ea753f37a8ea"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1440,
+                448
+            ],
+            "id": "75b2d715-5137-4dcf-84c8-6d504124e28b",
+            "name": "Get Voice"
+        },
+        {
+            "parameters": {
+                "operation": "update",
+                "base": {
+                    "__rl": true,
+                    "value": "appA4jKTjQy2QbmTm",
+                    "mode": "list",
+                    "cachedResultName": "Anime Video Automation",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm"
+                },
+                "table": {
+                    "__rl": true,
+                    "value": "tbl5v3yJNAQvyrxQD",
+                    "mode": "list",
+                    "cachedResultName": "Production",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm/tbl5v3yJNAQvyrxQD"
+                },
+                "columns": {
+                    "mappingMode": "defineBelow",
+                    "value": {
+                        "ID": "={{ $('Image Fields').item.json.ID }}",
+                        "Caption": "={{ $('Image Fields').item.json.caption }}",
+                        "Prompt": "={{ $('Image Fields').item.json.Prompt }}",
+                        "video_url": "={{ $('Add Video URL').item.json.fields.video_url }}",
+                        "voice_url": "={{ $json.audio.url }}",
+                        "ar": "={{ $('Voice Fields').item.json.aspect_ratio }}",
+                        "image_url": "={{ $('Add Video URL').item.json.fields.image_url }}"
+                    },
+                    "matchingColumns": [
+                        "ID"
+                    ],
+                    "schema": [
+                        {
+                            "id": "id",
+                            "displayName": "id",
+                            "required": false,
+                            "defaultMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": true,
+                            "removed": false
+                        },
+                        {
+                            "id": "ID",
+                            "displayName": "ID",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "Caption",
+                            "displayName": "Caption",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "Prompt",
+                            "displayName": "Prompt",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "ar",
+                            "displayName": "ar",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "image_url",
+                            "displayName": "image_url",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "video_url",
+                            "displayName": "video_url",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "voice_url",
+                            "displayName": "voice_url",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        }
+                    ],
+                    "attemptToConvertTypes": false,
+                    "convertFieldsToString": false
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.airtable",
+            "typeVersion": 2.1,
+            "position": [
+                1536,
+                448
+            ],
+            "id": "d53e989c-1540-469d-b22e-41ba56370596",
+            "name": "Add Voice URL",
+            "credentials": {
+                "airtableTokenApi": {
+                    "id": "CwHNK4Hk6kySzWbk",
+                    "name": "amaira alaina shaik"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "jsCode": "function buildScenes(input) {\n  const duration = 5000; // ms per keyframe\n\n  // Build video track\n  const videoKeyframes = input.video_url.map((url, index) => ({\n    url,\n    timestamp: index * duration,\n    duration\n  }));\n\n  const video = {\n    id: \"1\",\n    type: \"video\",\n    keyframes: videoKeyframes\n  };\n\n  // Build audio tracks (array of objects, not one object)\n  const audio = input.voice_url.map((url, index) => ({\n    id: String(index + 2),\n    type: \"audio\",\n    keyframes: [\n      {\n        url,\n        timestamp: index * duration,\n        duration\n      }\n    ]\n  }));\n\n  return {\n    ffmpeg: {\n      video,\n      audio // this will now be an array of objects\n    }\n  };\n}\n\n// Get input from n8n\nconst input = $input.first().json;\n\n// Wrap the result in an array with a `json` property\nreturn [\n  {\n    json: buildScenes(input)\n  }\n];"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                336,
+                768
+            ],
+            "id": "18f8fd79-037a-4bcb-bbdd-d98c7d60d95c",
+            "name": "Organize"
+        },
+        {
+            "parameters": {
+                "promptType": "define",
+                "text": "=Create a one sentence Commentary for: {{ $json.Prompt }}",
+                "options": {
+                    "systemMessage": "You are a short, concise Commentary creator. Use your think tool in approaching the following instructions:\n\nBased on user input, create a one-sentence commentary of the character for viewers to experience her reality. Each sentence is less than 15 words. \n\nThe sentenc for each video scene is less than 15 words only. Base your narration from user input. \n\nOnly use everyday regular folk witty english and NOT academic, scholarly english —no explanations, double-quotes in values, or line breaks inside values. Just output the sentence only."
+                }
+            },
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 2.2,
+            "position": [
+                1024,
+                448
+            ],
+            "id": "fe84963f-8c6e-455a-92f3-58062625202b",
+            "name": "Narration Agent"
+        },
+        {
+            "parameters": {
+                "promptType": "define",
+                "text": "=Image URL: {{ $json['Image URL '] }}\nPrompt: {{ $json.Prompt }}\nCaption: {{ $json.caption }}\nAspect Ratio: {{ $json.aspect_ratio }}\nMusic URL: {{ $json['Music URL'] }}",
+                "hasOutputParser": true,
+                "options": {
+                    "systemMessage": "Use the following user input to create an expressive video scene. Use your think tool in analyzing and making decisions on how to approach the following tasks and NOT produce an undefined output:\n\nGenerate the video scene from the prompt, in the specified aspect ratio using the visual, caption and prompt which describes the scene. Ensure the output harmonizes the caption with the mood and visual elements dynamically from the variables given.\n\nDisplay the provided image ({image_url}) as the primary visual reference for the scene.\n\nRender a video in a {aspect_ratio} aspect ratio that visually expresses the described scene: {prompt}\n\n## Output FORMAT\n\nImage URL: (should be URL)\n\nFinal Prompt: Describe the video scene  (DO NOT INCLUDE ASPECT RATIO HERE)\n\nAspect Ratio: 16:9 (for example)\n\nCaption:\n\nMusic URL:"
+                }
+            },
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 2.2,
+            "position": [
+                144,
+                448
+            ],
+            "id": "79d41670-ac43-4d4e-8fa5-2a00f7d7b856",
+            "name": "Video Agent"
+        },
+        {
+            "parameters": {
+                "promptType": "define",
+                "text": "=Anime Scenes with the following specifications:\n\nAnime Idea: {{ $json.ID }}\nYouTube Title: {{ $json.Title }}\nYouTube Description: {{ $json.Description }}\nCaption: {{ $json.caption }}\nImage URL: {{ $json['Image URL'] }}\ncharacter: {{ $json.character }}\nstory: {{ $json.story }}\nvisual_style: {{ $json.visual_style }}\ncolors: {{ $json.colors }}\nscenes: {{ $json.scenes }}\naspect ratio: {{ $json.ar }}\nMusic URL: {{ $json[\"Music URL\"] }}",
+                "hasOutputParser": true,
+                "options": {
+                    "systemMessage": "=You are an expert prompt engineer for anime videos. Your task is to create sequential voiceover and image prompts for a video. Please use your think tool in performing the following actions.\n\nWorkflow / Narrative Arc\n\nGenerate a unique ID for each scene.\n\nScene 1: The voiceover script is the caption. Make sure that each scene has a differentiated voiceover script you take inspiraton from the caption. \n\nIntro (First 20% of scenes): Establish the main character and initial setting.\n\nBuild-up (Middle 60% of scenes): Develop emotion, drama, and transformations through smooth narrative progress.\n\nConclusion (Last 20% of scenes): Bring closure or resolution without abruptness.\n\nSource Data\nThe user will provide you with the title and description of the video, along with additional scene details.\n\nIf it looks like it's for a story, make the script follow a story arc with voiceover narration matching each part of the story.\n\nTASK / OUTPUT\nReturn a JSON array of [user-defined number] objects in the following format—no explanations, double-quotes in values, or line breaks inside values:\n\nScene: Sequential number (start at 1, count up)\n\ncaption: One sentence, 7–12 words strictly, spoken in less than 5 seconds, always flows from previous scene and supports seamless narrative arc. Each caption fits the defined anime niche, topic, and style from the user.\n\n##Output\nAnime Idea\n\nID\n\nImage URL\n\ncaption\n\ncharacter\n\nstory\n\nvisual_style\n\ncolors\n\nscenes\n\naspect_ratio\n\nimage_prompt: One sentence only, generated by combining character, story, visual_style, and colors. Instructional.\n\nCRITICAL REQUIREMENTS\n\nAll scenes must connect smoothly—the voiceovers and visuals should flow as a single story, just like one seamless video.\n\nAvoid repetition across captions and image prompts.\n\nAbsolutely avoid sensitive words relating to minors, violence, nudity, or anything that may flag sensitive content policies.\n\nNo explanations or extra output. Just the array, following user-defined scene count and structure."
+                }
+            },
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 2.2,
+            "position": [
+                480,
+                176
+            ],
+            "id": "3d8bee7c-1d51-4cd4-89a7-2153c94530da",
+            "name": "Idea Agent"
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "dbbc9559-70c4-4126-9e3f-61f570f84a7d",
+                            "name": "Idea",
+                            "value": "={{ $('Voice Fields').item.json.Idea }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "0e54120e-9c48-4f7c-b6c1-ed8d6a790d98",
+                            "name": "ID",
+                            "value": "={{ $('Voice Fields').item.json.ID }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "2ad6aaaa-d72d-4ab5-9fef-6dc72f2b1eed",
+                            "name": "video_url",
+                            "value": "={{ $json.video_url }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "ddf007f8-4bcf-4a9d-8add-6cdfa3e26cbe",
+                            "name": "voice_url",
+                            "value": "={{ $json.voice_url }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "a3772821-0edb-4956-88e7-d6a7a1e43ec5",
+                            "name": "music_url",
+                            "value": "={{ $('Voice Fields').item.json['Music URL'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "a184af96-d969-4ea3-91a5-dab4ce3ae940",
+                            "name": "YouTube Title",
+                            "value": "={{ $('Voice Fields').item.json['YouTube Title'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "c90236d8-ba65-4830-be9f-60936866bfcd",
+                            "name": "YouTube Description",
+                            "value": "={{ $('Voice Fields').item.json['YouTube Description'] }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                144,
+                768
+            ],
+            "id": "1376ae3a-d5b0-4167-a6ef-61f0e43750f1",
+            "name": "Merge Fields"
+        },
+        {
+            "parameters": {
+                "jsCode": "// 1. Read or initialize the persistent counter in global static data\nconst staticData = $getWorkflowStaticData('global');\nif (staticData.counter === undefined) {\n  staticData.counter = 0;\n}\n\n// 2. Read all incoming items\nconst items = $input.all();\n\n// 3. Iterate over each item, bump counter, wrap 1–4, and compute scheduledTime\nconst results = items.map(item => {\n  // Increment and wrap back to 1 after 4\n  staticData.counter += 1;\n  if (staticData.counter > 4) {\n    staticData.counter = 1;\n  }\n\n  // Parse finished_at or use current date\n  const raw = item.json.finished_at;\n  const baseDate = raw ? new Date(raw) : new Date();\n  if (isNaN(baseDate.getTime())) {\n    throw new Error(`Invalid date \"${raw}\" on item`);\n  }\n\n  // Add days based on the counter (1–4)\n  baseDate.setDate(baseDate.getDate() + staticData.counter);\n\n  return {\n    json: {\n      scheduledTime: baseDate.toISOString(),\n      counter: staticData.counter,\n    },\n  };\n});\n\n// 4. Return array of { json: { … } } items\nreturn results;\n"
+            },
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1072,
+                768
+            ],
+            "id": "4742970b-5d31-4cd8-a026-9a257c60708d",
+            "name": "Schedule"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://backend.blotato.com/v2/posts",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "blotato-api-key",
+                            "value": "blt_4Bbg3sFDb7+S7n+EBSYtbwdMPnU+f0I1hU+vSpos3m0="
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"post\": {\n    \"accountId\": \"12409\",\n    \"content\": {\n      \"text\": \"{{ $json['YouTube Description'] }}\",\n      \"mediaUrls\": [\n        \"{{ $json['Media URL'] }}\"\n      ],\n      \"platform\": \"youtube\"\n    },\n    \"target\": {\n      \"targetType\": \"youtube\",\n      \"title\": \"{{ $json['YouTube Title'] }}\",\n      \"privacyStatus\": \"public\",\n      \"shouldNotifySubscribers\": true,\n      \"isMadeForKids\": false\n    }\n  },\n  \"scheduledTime\": \"{{ $json['Scheduled Date'] }}\"\n}",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1424,
+                768
+            ],
+            "id": "b282e59c-90f4-4f52-8b81-3f8c1e090b42",
+            "name": "Sched on YouTube"
+        },
+        {
+            "parameters": {
+                "assignments": {
+                    "assignments": [
+                        {
+                            "id": "87758a7e-ff0b-4adb-9fc0-d7f0189158d6",
+                            "name": "Idea",
+                            "value": "={{ $('Merge Fields').first().json.Idea }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "753be8ae-d5a9-415a-944d-74bc5688509b",
+                            "name": "ID",
+                            "value": "={{ $('Merge Fields').first().json.ID }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "6155873e-6d6d-4fd2-a6c0-f7c90cc941d0",
+                            "name": "Media URL",
+                            "value": "={{ $json.url }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "dbd3f636-35a5-40ad-b0e2-8285994767a9",
+                            "name": "Scheduled Date",
+                            "value": "={{ $('Schedule').item.json.scheduledTime }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "c19743e7-f6e9-47b9-b062-0499f762ef05",
+                            "name": "YouTube Title",
+                            "value": "={{ $('Merge Fields').first().json['YouTube Title'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "75cd6b4e-1e14-4ce8-8e74-414df202afa9",
+                            "name": "=YouTube Description",
+                            "value": "={{ $('Merge Fields').first().json['YouTube Description'] }}",
+                            "type": "string"
+                        },
+                        {
+                            "id": "7fe919cc-efde-49b7-a742-1912d4c724ce",
+                            "name": "Video Output URL",
+                            "value": "={{ $('Get Subs').item.json.video.url }}",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.set",
+            "typeVersion": 3.4,
+            "position": [
+                1296,
+                768
+            ],
+            "id": "65c803cd-57fc-41f4-a5b8-e7f91fe7c62d",
+            "name": "Set Final Items"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "https://queue.fal.run/fal-ai/workflow-utilities/auto-subtitle",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Key 6b7c0e0d-e644-4e4a-8084-635b158886bf:0d6bd9724f4861083319ea753f37a8ea"
+                        }
+                    ]
+                },
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={\n  \"video_url\": \"{{ $json.video_url }}\",\n  \"language\": \"en\",\n  \"font_name\": \"Montserrat\",\n  \"font_size\": 100,\n  \"font_weight\": \"bold\",\n  \"font_color\": \"white\",\n  \"highlight_color\": \"purple\",\n  \"stroke_width\": 3,\n  \"stroke_color\": \"black\",\n  \"background_color\": \"none\",\n  \"position\": \"bottom\",\n  \"y_offset\": 75,\n  \"words_per_subtitle\": 1,\n  \"enable_animation\": true\n}",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                720,
+                768
+            ],
+            "id": "2c9f35dc-7698-47bc-8a25-2794fbf94250",
+            "name": "Add Subs"
+        },
+        {
+            "parameters": {
+                "url": "=https://queue.fal.run/fal-ai/workflow-utilities/requests/{{ $json.request_id }}",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "Key 6b7c0e0d-e644-4e4a-8084-635b158886bf:0d6bd9724f4861083319ea753f37a8ea"
+                        }
+                    ]
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                912,
+                768
+            ],
+            "id": "d903af6b-4f97-44ea-a144-c66fb84aac46",
+            "name": "Get Subs"
+        },
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {}
+                    ]
+                }
+            },
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                48,
+                176
+            ],
+            "id": "ea809314-8a29-4d67-9148-ca6ca52441f4",
+            "name": "Schedule Trigger"
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 2
+                    },
+                    "conditions": [
+                        {
+                            "id": "89d2bd53-4966-49f8-af6e-33e18cc97268",
+                            "leftValue": "={{ $json.Status }}",
+                            "rightValue": "Todo",
+                            "operator": {
+                                "type": "string",
+                                "operation": "equals",
+                                "name": "filter.operator.equals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.2,
+            "position": [
+                368,
+                176
+            ],
+            "id": "049d8c11-bca9-4832-8f7f-f08a1f1c457b",
+            "name": "If"
+        },
+        {
+            "parameters": {
+                "operation": "update",
+                "base": {
+                    "__rl": true,
+                    "value": "appA4jKTjQy2QbmTm",
+                    "mode": "list",
+                    "cachedResultName": "Anime Video Automation",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm"
+                },
+                "table": {
+                    "__rl": true,
+                    "value": "tbl8pjZCwIIIzCLHc",
+                    "mode": "list",
+                    "cachedResultName": "Anime Video DashB",
+                    "cachedResultUrl": "https://airtable.com/appA4jKTjQy2QbmTm/tbl8pjZCwIIIzCLHc"
+                },
+                "columns": {
+                    "mappingMode": "defineBelow",
+                    "value": {
+                        "ID": "={{ $('Get Anime Idea').item.json.ID }}",
+                        "id": "={{ $('Get Anime Idea').item.json.ID }}",
+                        "Status": "Done",
+                        "Video Output URL": "={{ $('Set Final Items').item.json['Video Output URL'] }}"
+                    },
+                    "matchingColumns": [
+                        "id"
+                    ],
+                    "schema": [
+                        {
+                            "id": "id",
+                            "displayName": "id",
+                            "required": false,
+                            "defaultMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": true,
+                            "removed": false
+                        },
+                        {
+                            "id": "ID",
+                            "displayName": "ID",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "Status",
+                            "displayName": "Status",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "options",
+                            "options": [
+                                {
+                                    "name": "Todo",
+                                    "value": "Todo"
+                                },
+                                {
+                                    "name": "Done",
+                                    "value": "Done"
+                                }
+                            ],
+                            "readOnly": false,
+                            "removed": false
+                        },
+                        {
+                            "id": "Title",
+                            "displayName": "Title",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "Description",
+                            "displayName": "Description",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "caption",
+                            "displayName": "caption",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "story",
+                            "displayName": "story",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "scenes",
+                            "displayName": "scenes",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "character",
+                            "displayName": "character",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "visual_style",
+                            "displayName": "visual_style",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "colors",
+                            "displayName": "colors",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "ar",
+                            "displayName": "ar",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "Image URL",
+                            "displayName": "Image URL",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "Music URL",
+                            "displayName": "Music URL",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": true
+                        },
+                        {
+                            "id": "Video Output URL",
+                            "displayName": "Video Output URL",
+                            "required": false,
+                            "defaultMatch": false,
+                            "canBeUsedToMatch": true,
+                            "display": true,
+                            "type": "string",
+                            "readOnly": false,
+                            "removed": false
+                        }
+                    ],
+                    "attemptToConvertTypes": false,
+                    "convertFieldsToString": false
+                },
+                "options": {}
+            },
+            "type": "n8n-nodes-base.airtable",
+            "typeVersion": 2.1,
+            "position": [
+                1552,
+                768
+            ],
+            "id": "c0ff0ee7-a858-43af-9d88-e89bbdc3a496",
+            "name": "Complete Idea",
+            "credentials": {
+                "airtableTokenApi": {
+                    "id": "CwHNK4Hk6kySzWbk",
+                    "name": "amaira alaina shaik"
+                }
+            }
+        }
+    ],
+    "connections": {
+        "100": {
+            "main": [
+                [
+                    {
+                        "node": "Get Image",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "110": {
+            "main": [
+                [
+                    {
+                        "node": "Get Voice",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "120": {
+            "main": [
+                [
+                    {
+                        "node": "Get Merged Video",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "210": {
+            "main": [
+                [
+                    {
+                        "node": "Get clip",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "350": {
+            "main": [
+                [
+                    {
+                        "node": "Get Subs",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Random": {
+            "main": [
+                [
+                    {
+                        "node": "Get Anime Idea",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Think": {
+            "ai_tool": [
+                [
+                    {
+                        "node": "Idea Agent",
+                        "type": "ai_tool",
+                        "index": 0
+                    },
+                    {
+                        "node": "Video Agent",
+                        "type": "ai_tool",
+                        "index": 0
+                    },
+                    {
+                        "node": "Narration Agent",
+                        "type": "ai_tool",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Upload to Blotato": {
+            "main": [
+                [
+                    {
+                        "node": "Set Final Items",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Brain": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "Idea Agent",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    },
+                    {
+                        "node": "Format",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    },
+                    {
+                        "node": "Video Agent",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    },
+                    {
+                        "node": "Narration Agent",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Merged Video": {
+            "main": [
+                [
+                    {
+                        "node": "Add Subs",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Aggregate": {
+            "main": [
+                [
+                    {
+                        "node": "Organize",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Split Out": {
+            "main": [
+                [
+                    {
+                        "node": "Image Fields",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Video": {
+            "main": [
+                [
+                    {
+                        "node": "210",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Merge": {
+            "main": [
+                [
+                    {
+                        "node": "120",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get clip": {
+            "main": [
+                [
+                    {
+                        "node": "Extract Video URL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Format": {
+            "ai_outputParser": [
+                [
+                    {
+                        "node": "Idea Agent",
+                        "type": "ai_outputParser",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Image": {
+            "main": [
+                [
+                    {
+                        "node": "100",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Image": {
+            "main": [
+                [
+                    {
+                        "node": "Extract Image URL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Image Fields": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Image",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Video Fields": {
+            "main": [
+                [
+                    {
+                        "node": "Video Agent",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract Image URL": {
+            "main": [
+                [
+                    {
+                        "node": "Add Image URL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Format Video Details": {
+            "ai_outputParser": [
+                [
+                    {
+                        "node": "Video Agent",
+                        "type": "ai_outputParser",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Extract Video URL": {
+            "main": [
+                [
+                    {
+                        "node": "Add Video URL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Add Image URL": {
+            "main": [
+                [
+                    {
+                        "node": "Video Fields",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Add Video URL": {
+            "main": [
+                [
+                    {
+                        "node": "Voice Fields",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Anime Idea": {
+            "main": [
+                [
+                    {
+                        "node": "If",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Voice Fields": {
+            "main": [
+                [
+                    {
+                        "node": "Narration Agent",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Batch Items": {
+            "main": [
+                [
+                    {
+                        "node": "Merge Fields",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Create Voice": {
+            "main": [
+                [
+                    {
+                        "node": "110",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Voice": {
+            "main": [
+                [
+                    {
+                        "node": "Add Voice URL",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Add Voice URL": {
+            "main": [
+                [
+                    {
+                        "node": "Get Batch Items",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Organize": {
+            "main": [
+                [
+                    {
+                        "node": "Merge",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Narration Agent": {
+            "main": [
+                [
+                    {
+                        "node": "Create Voice",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Video Agent": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Video",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Idea Agent": {
+            "main": [
+                [
+                    {
+                        "node": "Split Out",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Merge Fields": {
+            "main": [
+                [
+                    {
+                        "node": "Aggregate",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Schedule": {
+            "main": [
+                [
+                    {
+                        "node": "Upload to Blotato",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Sched on YouTube": {
+            "main": [
+                [
+                    {
+                        "node": "Complete Idea",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Set Final Items": {
+            "main": [
+                [
+                    {
+                        "node": "Sched on YouTube",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Add Subs": {
+            "main": [
+                [
+                    {
+                        "node": "350",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Subs": {
+            "main": [
+                [
+                    {
+                        "node": "Schedule",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Schedule Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "Random",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "If": {
+            "main": [
+                [
+                    {
+                        "node": "Idea Agent",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Random",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {},
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "00e5e6dd5a677868ea025baa55a65a10265c3aaefd6409626e61194ecce0d6a1"
+    }
+}
