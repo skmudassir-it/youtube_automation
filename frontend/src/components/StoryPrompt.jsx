@@ -6,7 +6,7 @@ const SUGGESTIONS = [
   "A musician's melody can heal any wound or sorrow...",
 ];
 
-export default function StoryPrompt({ value, onChange }) {
+export default function StoryPrompt({ value, onChange, length, onLengthChange }) {
   const maxChars = 2000;
 
   return (
@@ -31,6 +31,31 @@ export default function StoryPrompt({ value, onChange }) {
       <div className="prompt-meta">
         <span>{value.length} / {maxChars}</span>
         <span>min 20 characters</span>
+      </div>
+
+      <div style={{ marginTop: 'var(--space-md)' }}>
+        <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: '500' }}>Target Video Duration</p>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          {[15, 30, 45, 60, 90].map(s => (
+            <button
+              key={s}
+              className={`btn-ghost ${length === s ? 'selected' : ''}`}
+              onClick={() => onLengthChange(s)}
+              style={{
+                padding: '8px 16px', 
+                borderRadius: '8px',
+                border: `1px solid ${length === s ? 'var(--accent-mid)' : 'var(--border-subtle)'}`,
+                background: length === s ? 'rgba(74, 144, 226, 0.1)' : 'var(--bg-elevated)',
+                color: length === s ? 'var(--accent-mid)' : 'var(--text-secondary)',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                fontWeight: length === s ? 'bold' : 'normal'
+              }}
+            >
+              {s} seconds
+            </button>
+          ))}
+        </div>
       </div>
 
       <div style={{ marginTop: 'var(--space-lg)' }}>

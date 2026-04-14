@@ -51,7 +51,7 @@ const jobs = new Map();
  */
 app.post('/api/jobs', upload.array('images', 5), (req, res) => {
   try {
-    const { storyPrompt, visualStyle, platforms, musicUrl } = req.body;
+    const { storyPrompt, visualStyle, platforms, musicUrl, videoLength } = req.body;
 
     if (!storyPrompt || !visualStyle || !platforms) {
       return res.status(400).json({ error: 'Missing required fields: storyPrompt, visualStyle, platforms' });
@@ -69,6 +69,7 @@ app.post('/api/jobs', upload.array('images', 5), (req, res) => {
       id: jobId,
       storyPrompt,
       visualStyle,
+      videoLength: parseInt(videoLength) || 15,
       platforms: parsedPlatforms,
       referenceImageUrls,
       musicUrl: musicUrl || null,

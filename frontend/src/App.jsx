@@ -11,9 +11,9 @@ const STEPS = ['Story', 'Style', 'Platforms', 'Images', 'Review'];
 const API_BASE = 'http://localhost:3001';
 
 function App() {
-  // Form state
   const [currentStep, setCurrentStep] = useState(0);
   const [storyPrompt, setStoryPrompt] = useState('');
+  const [videoLength, setVideoLength] = useState(15);
   const [visualStyle, setVisualStyle] = useState('');
   const [platforms, setPlatforms] = useState([]);
   const [images, setImages] = useState([]);
@@ -56,6 +56,7 @@ function App() {
     try {
       const formData = new FormData();
       formData.append('storyPrompt', storyPrompt);
+      formData.append('videoLength', videoLength);
       formData.append('visualStyle', visualStyle);
       formData.append('platforms', JSON.stringify(platforms));
 
@@ -82,11 +83,11 @@ function App() {
     }
   };
 
-  // Reset for new job
   const handleNewJob = () => {
     setJobId(null);
     setCurrentStep(0);
     setStoryPrompt('');
+    setVideoLength(15);
     setVisualStyle('');
     setPlatforms([]);
     setImages([]);
@@ -96,7 +97,7 @@ function App() {
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return <StoryPrompt value={storyPrompt} onChange={setStoryPrompt} />;
+        return <StoryPrompt value={storyPrompt} onChange={setStoryPrompt} length={videoLength} onLengthChange={setVideoLength} />;
       case 1:
         return <StyleSelector selected={visualStyle} onSelect={setVisualStyle} />;
       case 2:

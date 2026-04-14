@@ -61,7 +61,7 @@ const PLATFORM_ASPECT_RATIOS = {
  * Run the full pipeline for a job
  */
 export async function runPipeline(job, updateStatus) {
-  const { storyPrompt, visualStyle, platforms, referenceImageUrls, musicUrl } = job;
+  const { storyPrompt, visualStyle, platforms, referenceImageUrls, musicUrl, videoLength } = job;
 
   const apiKeys = {
     openrouter: process.env.OPENROUTER_API_KEY,
@@ -73,7 +73,9 @@ export async function runPipeline(job, updateStatus) {
   // Determine primary aspect ratio (use the first platform's AR)
   const primaryPlatform = platforms[0] || 'youtube';
   const aspectRatio = PLATFORM_ASPECT_RATIOS[primaryPlatform] || '16:9';
-  const numScenes = 3;
+  
+  // Each video clip is ~5 seconds
+  const numScenes = Math.max(3, Math.round(videoLength / 5));
 
   try {
     // ═══════════════════════════════════════════

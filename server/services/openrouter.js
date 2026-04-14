@@ -15,6 +15,7 @@ export async function chatCompletion(systemPrompt, userPrompt, apiKey) {
     },
     body: JSON.stringify({
       model: 'openai/gpt-4o-mini',
+      response_format: { type: "json_object" },
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
@@ -38,7 +39,7 @@ export async function chatCompletion(systemPrompt, userPrompt, apiKey) {
 export async function generateScenes(storyPrompt, visualStyle, aspectRatio, numScenes, apiKey) {
   const systemPrompt = `You are an expert prompt engineer for ${visualStyle} videos. Your task is to create sequential voiceover and image prompts for a video.
 
-Generate a JSON array of ${numScenes} scene objects. Each scene must flow smoothly into the next as a cohesive story.
+Generate a JSON object with a single root key "scenes" containing an array of ${numScenes} scene objects. Each scene must flow smoothly into the next as a cohesive story.
 
 For each scene provide:
 - "scene": Sequential number starting at 1
@@ -51,17 +52,20 @@ CRITICAL:
 - Avoid repetition across captions and image prompts
 - Avoid any sensitive content or violence
 - DO NOT use ANY names of specific people (not even fictional ones like "Amaira"), copyrighted/trademarked terms, or real-world brands in the image_prompt (e.g., use "a little girl" instead of "Amaira", "plastic brick toy figures" instead of "Lego", and "yellow pill-shaped cartoon creature in overalls" instead of "Minion"). The image AI will strictly block the generation if it detects ANY names or trademarks.
-- Output ONLY valid JSON array, no explanations`;
+- You must reply ONLY with a valid JSON object starting with { "scenes": [ ...`;
 
   const userPrompt = `Create ${numScenes} ${visualStyle} video scenes for this story:\n\n${storyPrompt}`;
 
   const raw = await chatCompletion(systemPrompt, userPrompt, apiKey);
 
   // Extract JSON from response
-  const jsonMatch = raw.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) throw new Error('Failed to parse scene JSON from LLM response');
-
-  return JSON.parse(jsonMatch[0]);
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed.scenes;
+  } catch (err) {
+    console.error(`\n=== FAILED LLM PARSE ===\nRAW RESPONSE:\n${raw}\n=========================\n`);
+    throw new Error('LLM returned malformed JSON: ' + err.message);
+  }
 }
 
 /**
