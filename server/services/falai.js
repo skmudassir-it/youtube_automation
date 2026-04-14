@@ -60,8 +60,9 @@ async function pollFalJob(endpoint, requestId, apiKey, maxAttempts = 60, interva
         throw new Error(`Fal.ai job failed: ${JSON.stringify(result)}`);
       }
     } catch (err) {
-      // 422 means still processing
-      if (!err.message.includes('422') && !err.message.includes('in_queue') && !err.message.includes('in_progress')) {
+      // 422, 400 means still processing depending on fal.ai endpoint
+      const msg = err.message.toLowerCase();
+      if (!msg.includes('422') && !msg.includes('in queue') && !msg.includes('in_queue') && !msg.includes('in progress') && !msg.includes('in_progress')) {
         throw err;
       }
     }

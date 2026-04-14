@@ -45,13 +45,14 @@ async function getTaskResult(taskId, apiKey) {
 async function pollTask(taskId, apiKey, maxAttempts = 60, intervalMs = 10000) {
   for (let i = 0; i < maxAttempts; i++) {
     const result = await getTaskResult(taskId, apiKey);
+    const apiState = result.data?.state || result.data?.status;
 
-    if (result.data?.status === 'completed' || result.data?.status === 'succeed') {
+    if (apiState === 'completed' || apiState === 'succeed' || apiState === 'success') {
       return result;
     }
 
-    if (result.data?.status === 'failed') {
-      throw new Error(`Kie.ai task ${taskId} failed: ${JSON.stringify(result.data)}`);
+    if (apiState === 'failed' || apiState === 'fail') {
+      throw new Error(`Kie.ai task ${taskId} failed: ${result.data?.failMsg || JSON.stringify(result.data)}`);
     }
 
     await new Promise(r => setTimeout(r, intervalMs));
@@ -93,7 +94,7 @@ export async function generateImage(prompt, referenceImageUrls, aspectRatio, api
 
   const task = await createTask(payload, apiKey);
   const taskId = task.data?.taskId;
-  if (!taskId) throw new Error('No taskId returned from image generation');
+  if (!taskId) throw new Error(`No taskId returned from image generation. Response: ${JSON.stringify(task)}`);
 
   // Wait before polling
   await new Promise(r => setTimeout(r, 10000));
@@ -125,7 +126,7 @@ export async function generateVideo(prompt, imageUrl, aspectRatio, apiKey) {
 
   const task = await createTask(payload, apiKey);
   const taskId = task.data?.taskId;
-  if (!taskId) throw new Error('No taskId returned from video generation');
+  if (!taskId) throw new Error(`No taskId returned from video generation. Response: ${JSON.stringify(task)}`);
 
   // Video generation takes longer
   await new Promise(r => setTimeout(r, 30000));

@@ -48,6 +48,20 @@ const STYLES = [
     emoji: '🌿',
     gradient: 'linear-gradient(135deg, #00b894, #55efc4, #81ecec)',
   },
+  {
+    id: 'lego',
+    name: 'Lego',
+    desc: 'Plastic brick stop-motion',
+    emoji: '🧱',
+    gradient: 'linear-gradient(135deg, #e17055, #f1c40f, #2980b9)',
+  },
+  {
+    id: 'minion',
+    name: 'Minion',
+    desc: 'Yellow, pill-shaped chaotic fun',
+    emoji: '🍌',
+    gradient: 'linear-gradient(135deg, #f1c40f, #f39c12, #3498db)',
+  },
 ];
 
 export default function StyleSelector({ selected, onSelect }) {

@@ -14,7 +14,7 @@ export async function chatCompletion(systemPrompt, userPrompt, apiKey) {
       'HTTP-Referer': 'http://localhost:3001',
     },
     body: JSON.stringify({
-      model: 'google/gemini-2.5-flash-preview',
+      model: 'openai/gpt-4o-mini',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
@@ -49,7 +49,8 @@ For each scene provide:
 CRITICAL:
 - All scenes must connect as one seamless video story
 - Avoid repetition across captions and image prompts
-- Avoid any sensitive content
+- Avoid any sensitive content or violence
+- DO NOT use ANY names of specific people (not even fictional ones like "Amaira"), copyrighted/trademarked terms, or real-world brands in the image_prompt (e.g., use "a little girl" instead of "Amaira", "plastic brick toy figures" instead of "Lego", and "yellow pill-shaped cartoon creature in overalls" instead of "Minion"). The image AI will strictly block the generation if it detects ANY names or trademarks.
 - Output ONLY valid JSON array, no explanations`;
 
   const userPrompt = `Create ${numScenes} ${visualStyle} video scenes for this story:\n\n${storyPrompt}`;

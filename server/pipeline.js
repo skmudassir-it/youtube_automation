@@ -8,6 +8,40 @@ import { generateScenes, generateNarration, generateMetadata } from './services/
 import { generateImage, generateVideo } from './services/kieai.js';
 import { textToSpeech, mergeVideos, addSubtitles } from './services/falai.js';
 import { uploadMedia, schedulePost, getAccountId } from './services/blotato.js';
+import path from 'path';
+import fs from 'fs';
+
+/**
+ * Upload local files to tmpfiles.org so external APIs can download them
+ */
+async function getPublicUrl(localUrl) {
+  if (!localUrl || (!localUrl.includes('localhost') && !localUrl.includes('127.0.0.1'))) return localUrl;
+  try {
+    const filename = localUrl.split('/').pop();
+    const filePath = path.join(process.cwd(), 'uploads', filename);
+    if (!fs.existsSync(filePath)) return localUrl;
+
+    const fileBuffer = fs.readFileSync(filePath);
+    const blob = new Blob([fileBuffer], { type: 'image/jpeg' });
+    const formData = new FormData();
+    formData.append('file', blob, filename);
+
+    const res = await fetch('https://tmpfiles.org/api/v1/upload', {
+      method: 'POST',
+      body: formData
+    });
+    
+    if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+    const parsed = await res.json();
+    if (parsed.data?.url) {
+      console.log(`Converted local URL to: ${parsed.data.url}`);
+      return parsed.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
+    }
+  } catch (err) {
+    console.error('Failed to make image public:', err.message);
+  }
+  return localUrl;
+}
 
 /**
  * Aspect ratio mapping per platform
@@ -48,6 +82,10 @@ export async function runPipeline(job, updateStatus) {
     updateStatus('generating_scenes', 'Generating story scenes with AI...', 15);
 
     const scenes = await generateScenes(storyPrompt, visualStyle, aspectRatio, numScenes, apiKeys.openrouter);
+    console.log('\n=== GENERATED SCENES ===');
+    console.log(JSON.stringify(scenes, null, 2));
+    console.log('========================\n');
+    
     job.scenes = scenes;
 
     // ═══════════════════════════════════════════
@@ -55,18 +93,24 @@ export async function runPipeline(job, updateStatus) {
     // ═══════════════════════════════════════════
     updateStatus('generating_images', 'Creating images for each scene...', 30);
 
+    // Make local reference images public for Kie.ai
+    let publicReferenceUrls = [];
+    if (referenceImageUrls && referenceImageUrls.length > 0) {
+      publicReferenceUrls = await Promise.all(referenceImageUrls.map(url => getPublicUrl(url)));
+    }
+
     const imageUrls = [];
     for (let i = 0; i < scenes.length; i++) {
-      const scene = scenes[i];
-      updateStatus('generating_images', `Creating image ${i + 1} of ${scenes.length}...`, 30 + (i / scenes.length) * 15);
+        const scene = scenes[i];
+        updateStatus('generating_images', `Creating image ${i + 1} of ${scenes.length}...`, 30 + (i / scenes.length) * 15);
 
-      const imageUrl = await generateImage(
-        scene.image_prompt,
-        referenceImageUrls || [],
-        aspectRatio,
-        apiKeys.kie
-      );
-      imageUrls.push(imageUrl);
+        const imageUrl = await generateImage(
+          scene.image_prompt,
+          publicReferenceUrls,
+          aspectRatio,
+          apiKeys.kie
+        );
+        imageUrls.push(imageUrl);
     }
 
     job.imageUrls = imageUrls;
@@ -99,12 +143,13 @@ export async function runPipeline(job, updateStatus) {
 
     const voiceUrls = [];
     for (let i = 0; i < scenes.length; i++) {
-      const scene = scenes[i];
-      updateStatus('generating_audio', `Narrating scene ${i + 1} of ${scenes.length}...`, 60 + (i / scenes.length) * 10);
+        const scene = scenes[i];
+        updateStatus('generating_audio', `Narrating scene ${i + 1} of ${scenes.length}...`, 60 + (i / scenes.length) * 10);
 
-      const narration = await generateNarration(scene.caption, apiKeys.openrouter);
-      const voiceUrl = await textToSpeech(narration, apiKeys.fal);
-      voiceUrls.push(voiceUrl);
+        const narration = await generateNarration(scene.caption, apiKeys.openrouter);
+        console.log(`\n=== SCENE ${i + 1} NARRATION ===\n${narration}\n========================\n`);
+        const voiceUrl = await textToSpeech(narration, apiKeys.fal);
+        voiceUrls.push(voiceUrl);
     }
 
     job.voiceUrls = voiceUrls;
@@ -135,6 +180,10 @@ export async function runPipeline(job, updateStatus) {
       const meta = await generateMetadata(storyPrompt, visualStyle, platform, apiKeys.openrouter);
       metadata[platform] = meta;
     }
+    
+    console.log('\n=== SOCIAL MEDIA METADATA ===');
+    console.log(JSON.stringify(metadata, null, 2));
+    console.log('=============================\n');
 
     job.metadata = metadata;
 
